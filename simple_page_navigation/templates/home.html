@@ -14,5 +14,19 @@
     <h4>Author : {{name}}</h4>
     <h4>Age : {{age}}</h4>
     <h4>{{list}}</h4>
+
+    <!-- condintional  -->
+    {% if age >= 18 %}
+    <h4>You will get driving license</h4>
+    {% elif age < 18 %}
+    <h4>You will not get driving license</h4>
+    {%endif%}
+    <hr />
+    <h2>Paid corses</h2>
+    <ul>
+      {%for course in courses%}
+      <li>{{course.name}} : {{course.fee}} USD</li>
+      {% endfor %}
+    </ul>
   </body>
 </html>
