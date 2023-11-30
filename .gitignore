@@ -1,0 +1,35 @@
+# Virtual environment
+.venv
+env/
+.env/
+
+# Other Django-related ignores
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore database and media files
+db.sqlite3
+/media/
+
+# Ignore development files
+*.bak
+*.swp
+*.swo
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore test database
+db.sqlite3
+
+# Ignore secret key
+*.secret
+
+# Ignore pipenv virtual environment
+Pipfile
+Pipfile.lock
