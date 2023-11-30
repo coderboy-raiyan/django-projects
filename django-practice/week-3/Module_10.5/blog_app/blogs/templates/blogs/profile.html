@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - blog</title>
+  </head>
+  <body>
+    <h1><a href="/">Home</a></h1>
+    <h1><a href="/blogs/profile">Profile</a></h1>
+    <hr />
+    <h1>This is Profile Page</h1>
+    <ul>
+      <li>Full name : {{name}}</li>
+      <li>Username : {{ name | cut:" " }}</li>
+      <li>age : {{age}}</li>
+      <li>Total tags : {{genre | length}}</li>
+      <li>Followers: {{ followers}}</li>
+      <li>
+        <span>Genre : </span>
+        {%for gen in genre%}
+        <p style="display: inline">{{gen}},</p>
+        {% endfor %}
+      </li>
+      <li>Mix tags : {{genre | join:"-"}}</li>
+    </ul>
+  </body>
+</html>
