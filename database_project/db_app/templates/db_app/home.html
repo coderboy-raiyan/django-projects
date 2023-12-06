@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form enctype="multipart/form-data" method="POST" action="">
+  {% csrf_token %}
+  {{form.as_div}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<h1 class="text-center mt-5">Students Data</h1>
+<table class="table w-50 border mx-auto mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Roll</th>
+        <th scope="col">Name</th>
+        <th scope="col">Adress</th>
+        <th scope="col">Father's Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for st in data%}
+        <tr>
+            <th scope="row">{{st.roll}}</th>
+            <td>{{st.name}}</td>
+            <td>{{st.address}}</td>
+            <td>{{st.father_name}}</td>
+            <td>
+                <a class="btn btn-danger" href="{% url 'delete_student' st.roll %}">Delete</a>
+            </td>
+          </tr>
+        {% endfor %} 
+    </tbody>
+  </table>
+
+{% endblock  %}
