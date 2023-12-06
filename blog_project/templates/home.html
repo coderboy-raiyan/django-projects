@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="d-flex my-5 container-xl column-gap-4 mx-auto">
+   
+       {%for post in data%}
+       <div class="w-50 card  p-0 flex-wrap">
+        <div class="card-header">
+        {{post.title}}
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{post.content | truncatewords:50 }}</p>
+            <small class="card-title d-block fw-semibold"><span class="text-primary">Author</span> : {{post.author.name}}</small>
+
+            {%for cate in post.category.all %}
+                <span class="badge rounded-pill text-bg-warning">#{{cate.name}}</span>
+            {% endfor %}
+            <hr>
+           <div class="d-flex justify-content-between">
+            <a href={%url 'edit_posts' post.id %} class="btn btn-info">Edit</a>
+            <a href={%url 'delete_posts' post.id %} class="btn btn-danger">Delete</a>
+           </div>
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+{% endblock %}
