@@ -10,12 +10,15 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+   
   </head>
   <body>
     <main>
       <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand"  href="/">Devto</a>
+        <div class="container-fluid ">
+          <a class="navbar-brand"   href="{%url 'home'%}">
+            <img style="width:100%; height:56px" src="https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png" alt="">
+          </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -27,14 +30,12 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="{%url 'home'%}">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href={% url 'add_authors' %}>Add Author</a>
-              </li>
+              {% if request.user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href={% url 'add_categories' %}>Add Category</a>
               </li>
@@ -42,25 +43,53 @@
                 <a class="nav-link" href={% url 'add_posts' %}>Add Post</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href={% url 'add_profiles' %}>Add Profile</a>
+                <a class="nav-link" href={% url 'profile' %}>Profile</a>
               </li>
-            
-           
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'logout' %}>
+                  <button class="btn btn-warning">Logout</button>
+                </a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'register' %}>Sign up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'login' %}>Sign in</a>
+              </li>
+             {% endif %}
             </ul>
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+          
           </div>
         </div>
       </nav>
+     
+      {% for i in messages %}
+        <script>
+          // Trigger SweetAlert2 automatically based on a condition
+          {% if i.tags == 'warning' %}
+          document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Message!',
+                text: '{{i}}',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+          });
+          {% else %}
+          document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Message!',
+                text: '{{i}}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+          });
+          {% endif %}
+      </script>
+      {% endfor %}
+
+
       {% block content %} {% endblock %}
     </main>
     <script
@@ -68,5 +97,6 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

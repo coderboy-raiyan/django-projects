@@ -1,27 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="d-flex my-5 container-xl column-gap-4 mx-auto">
-   
-       {%for post in data%}
-       <div class="w-50 card  p-0 flex-wrap">
-        <div class="card-header">
-        {{post.title}}
-        </div>
-        <div class="card-body">
-            <p class="card-text">{{post.content | truncatewords:50 }}</p>
-            <small class="card-title d-block fw-semibold"><span class="text-primary">Author</span> : {{post.author.name}}</small>
+  <section class="container-fluid bg-body-secondary vh-100 py-5 ">
+    <div class="d-flex column-gap-3">
+      <div class="w-25 d-flex flex-column p-5 row-gap-2 bg-warning-subtle shadow rounded">
+        <h4 class="fw-bold">Category Filters</h4>
+        {% for cate in categories %}
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="{{ cate.id }}">
+            <label class="form-check-label" for="{{ cate.id }}" >
+              <a href="{%url 'category_slug' cate.slug %}">{{ cate.name }}</a>
+            </label>
+          </div>
+        {% endfor %}
+      </div>
 
-            {%for cate in post.category.all %}
-                <span class="badge rounded-pill text-bg-warning">#{{cate.name}}</span>
-            {% endfor %}
-            <hr>
-           <div class="d-flex justify-content-between">
-            <a href={%url 'edit_posts' post.id %} class="btn btn-info">Edit</a>
-            <a href={%url 'delete_posts' post.id %} class="btn btn-danger">Delete</a>
-           </div>
+      <div class="w-75">
+        <h3>{{ data | length }} : results found</h3>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          {% for post in data %}
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  {{ post.title }}
+                </div>
+                <div class="card-body">
+                  <p class="card-text">{{ post.content | truncatewords:50 }}</p>
+                  <small class="card-title d-block fw-semibold">
+                    <span class="text-primary">Author</span> : {{ post.author.first_name }} {{ post.author.last_name }}
+                  </small>
+
+                  {% for cate in post.category.all %}
+                    <span class="badge rounded-pill text-bg-warning">#{{ cate.name }}</span>
+                  {% endfor %}
+                  <hr>
+                  <div class="d-flex justify-content-between">
+                    <a href="{% url 'edit_posts' post.id %}" class="btn btn-info">Edit</a>
+                    <a href="{% url 'delete_posts' post.id %}" class="btn btn-danger">Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %}
-    </section>
+    </div>
+  </section>
+
+
 {% endblock %}
