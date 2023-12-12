@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <small class="text-center d-block my-4">
+    Update Profile here: <a href="{% url 'edit_profile' %}">Edit Profile</a>
+  </small>
+  <section class="my-5 container-xl">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for post in posts %}
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              {{ post.title }}
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{ post.content | truncatewords:50 }}</p>
+              <small class="card-title d-block fw-semibold">
+                <span class="text-primary">Author</span> : {{ post.author.first_name }} {{ post.author.last_name }}
+              </small>
+
+              {% for cate in post.category.all %}
+                <span class="badge rounded-pill text-bg-warning">#{{ cate.name }}</span>
+              {% endfor %}
+              <hr>
+              <div class="d-flex justify-content-between">
+                <a href="{% url 'edit_posts' post.id %}" class="btn btn-info">Edit</a>
+                <a href="{% url 'delete_posts' post.id %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
