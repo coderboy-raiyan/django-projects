@@ -21,11 +21,10 @@
           {% for post in data %}
             <div class="col">
               <div class="card">
-                <div class="card-header">
-                  {{ post.title }}
-                </div>
-                <div class="card-body">
-                  <p class="card-text">{{ post.content | truncatewords:50 }}</p>
+                <div class="card-body mx-auto">
+                  <img class="w-100 mb-3 mx-auto rounded-4 d-block" src="{{post.image.url}}" alt="">
+                  <a class="text-decoration-none fs-4 text-dark fw-bold" href="{%url 'details_post' post.id %}"> {{ post.title }}</a>
+                  <p class="card-text">{{ post.content | truncatewords:20 }}</p>
                   <small class="card-title d-block fw-semibold">
                     <span class="text-primary">Author</span> : {{ post.author.first_name }} {{ post.author.last_name }}
                   </small>

@@ -104,3 +104,8 @@ class UserLoginView(LoginView):
         context = super().get_context_data(**kwargs)
         context['type'] = 'Login'
         return context
+
+
+class UserLogoutView(LogoutView):
+    def get_success_url(self):
+        return reverse_lazy("home")

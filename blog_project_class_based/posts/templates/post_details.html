@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section class="bg-body-secondary">
+  <div class="container py-5">
+    <div class="card  border-0 shadow-sm py-4">
+      <img class="w-75 rounded mx-auto d-block py-4" src="{{post.image.url}}" alt="">
+      <div class="card-body w-75 mx-auto">
+        <div class="d-flex justify-content-end gap-2">
+          <a href="{% url 'edit_posts' post.id %}" class="btn btn-info">Edit</a>
+          <a href="{% url 'delete_posts' post.id %}" class="btn btn-danger">Delete</a>
+        </div>
+        <a class="text-decoration-none fs-4 text-dark fw-bold d-block" href="{%url 'details_post' post.id %}"> {{ post.title }}</a>
+        <small class="card-title d-block fw-semibold">
+          <span class="text-primary">Author</span> : {{ post.author.first_name }} {{ post.author.last_name }}
+        </small>
+
+        {% for cate in post.category.all %}
+          <span class="badge rounded-pill text-bg-warning">#{{ cate.name }}</span>
+        {% endfor %}
+
+        <p class="card-text my-2">{{ post.content}}</p>
+       
+      </div>
+
+    </div>
+    
+    {% comment %} Comments  {% endcomment %}
+    <div class="my-5 py-3 border rounded shadow-sm bg-white">
+      <h5 class="text-center fw-bold">Total Comments : {{comments | length}}</h5>
+      
+      {% for comment in comments %}
+        <div class="bg-body-tertiary p-2 border mx-5 my-4 shadow rounded-2">
+          <h5 class="fw-bold">{{comment.name}}</h5>
+          <p>{{comment.body}}</p>
+          <small>{{comment.createdAt}} | <span class="text-primary">mail : {{comment.email}}</span></small>
+        </div>
+      {% endfor %}
+    </div>
+    {% comment %} comments Input {% endcomment %}
+    <div class="my-5 py-3 border rounded shadow-sm bg-white">
+      <h1 class="text-center">Add Comment</h1>
+      
+      <form method="POST" action="" class="mx-4">
+          {% csrf_token %}
+          {{comment_form|crispy}}
+          <button class="btn btn-warning" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock content %}
